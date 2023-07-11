@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Gorkem",
+        "project": "FastAPI", 
+        "isAdmin": 1, 
+        "id": 103 
+    }, 
+    {
+        "name": "Gizem",
+        "project": "Docker", 
+        "isAdmin": 0, 
+        "id": 104
+    }, 
+    {
+        "name": "Emre Kaan",
+        "project": "MongoDB", 
+        "isAdmin": 0, 
+        "id": 105
+    }
+    
+]

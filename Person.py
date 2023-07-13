@@ -1,12 +1,14 @@
 import json
 from pymongo import MongoClient
 
-class myStruct():
-    def __init__(self,name,admin,project,username):
-        self.name=name
-        self.admin=admin
-        self.project=project
-        self.username=username
+def check_username(username):
+
+    existing_user = people.count_documents({"username": username})
+
+    if existing_user > 0:
+        return True
+    else:
+        return False
 
 def read_person_list():
     mongoList = people.find({},{"_id":0})
@@ -79,7 +81,7 @@ if __name__ == "__main__":
 #fonksiyonları teker teker böl
 while True: #Does not exit the code until you give command to exit
 
-    selection = input("\nWhat would you like to do with Person database?\n Read\n Write\n Update\n Delete\n Exit\n")
+    selection = input("\nWhat would you like to do with Person database?\n Read\n Write\n Add Document\n Update\n Delete\n Exit\n ")
 
     if selection.lower() == "read": #Printing everything in people collection
         
@@ -94,7 +96,12 @@ while True: #Does not exit the code until you give command to exit
         projectInput = input("Project: ")
         usernameInput = input("Username: ")
 
-        create_person(nameInput, adminInput, projectInput, usernameInput)
+        while True:
+            if check_username(usernameInput):
+                usernameInput = input("This username is already in use, please enter a new one: ")
+            else:
+                create_person(nameInput, adminInput, projectInput, usernameInput)
+                break
         
     elif selection.lower() == "update": #Updates an already existing entry
         #Identifying the entry to be updated
@@ -121,6 +128,18 @@ while True: #Does not exit the code until you give command to exit
 
     elif selection.lower() == "exit":
         break
+
+    elif selection.lower() == "add document" or selection.lower() == "add doc" or selection.lower() == "add":
+        json_file_path = input("Enter the JSON file path: ")
+
+        # Load the data from the JSON file
+        with open(json_file_path) as file:
+            data = json.load(file)
+
+        people.insert_many(data)
+
+        print("Data has been written to MongoDB.")
+
     else:
         print("Please enter a valid command")
 

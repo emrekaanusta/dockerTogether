@@ -33,7 +33,7 @@ def menu():
           "5. Exit\n"
           "Enter selection: ")
 
-
+#creating new collection
 def createProject(name, desc, project):
     if name is None or project is None:
         print("Name and Project cannot be NULL")
@@ -43,12 +43,12 @@ def createProject(name, desc, project):
     else:
         db.projects.insert_one({"name": name, "desc": desc, "project": project})
 
-
+#reading available collection from database
 def readProject():
     for p in projects.find():
         print(p)
 
-
+#this function enables user to updating project collection
 def updateProject(uid, name, desc, project):
     for id in projects.find({"_id": uid}):  # search datas relates selected ObjectId
         if name != "":
@@ -58,8 +58,10 @@ def updateProject(uid, name, desc, project):
         if project != "":
             db.projects.update_one({"_id": uid}, {"$set": {"project": project}})
 
+#deleting specific collection with using unique project id
 def deleteProject(uid):
     db.projects.delete_many({"_id": uid})
+
 
 if __name__ == "__main__":
     

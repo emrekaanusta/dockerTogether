@@ -33,6 +33,7 @@ def menu():
           "5. Exit\n"
           "Enter selection: ")
 
+
 #creating new collection
 def createProject(name, desc, project):
     if name is None or project is None:
@@ -43,10 +44,12 @@ def createProject(name, desc, project):
     else:
         db.projects.insert_one({"name": name, "desc": desc, "project": project})
 
+
 #reading available collection from database
 def readProject():
     for p in projects.find():
         print(p)
+
 
 #this function enables user to updating project collection
 def updateProject(uid, name, desc, project):

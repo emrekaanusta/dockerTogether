@@ -1,29 +1,30 @@
 from pymongo import MongoClient
 from bson import ObjectId
 import json
-from os import path
+import os
 
 
-#file operations are done such as checking file path, opening file and loading/inserting data from JSON to MongoDB
-def fileOperation():
+# file operations are done such as checking file path, opening file and loading/inserting data from JSON to MongoDB
+def fileOperation(filepath):
+
     # check if file is exists
-    if path.isfile('p.json') is False:
-        raise Exception("File is not found!")
+    if not os.path.isfile(filepath):
+        raise FileNotFoundError("File was not found or is a directory")
 
     # loading or opening JSON file
-    with open('p.json') as file:
-        file_data = json.load(file)
+    with open(filepath) as file:
+        data = json.load(file)
 
-    # Check whether data is more than 1 or not, then inserting loaded data to collection in MongoDB.
-    if isinstance(file_data, list):
-        db.projects.insert_many(file_data)
-    else:
-        db.projects.insert_one(file_data)
+        # Check whether data is more than 1 or not, then inserting loaded data to collection in MongoDB.
+        if isinstance(data, list):
+            db.projects.insert_many(data)
+        else:
+            db.projects.insert_one(data)
 
+        print("Data has been written to MongoDB.")
 
-#menu is created for selecting CRUD operation
+# menu is created for selecting CRUD operation
 def menu():
-
     print("Select one of the CRUD operation: \n"
           "1. Create a new project\n"
           "2. Read projects\n"
@@ -31,74 +32,37 @@ def menu():
           "4. Delete project\n"
           "5. Exit\n"
           "Enter selection: ")
-    selection = int(input())
 
-    if selection == 5:
-        print("Good Bye!\n")
-        exit(0)
 
-    while selection != 5:
-        if selection == 1:
-            id = int(input("\nEnter id: "))
-            name = str(input("\nEnter name: "))
-            desc = str(input("\nEnter description: "))
-            project = str(input("\nEnter project: "))
+def createProject(name, desc, project):
+    if name is None or project is None:
+        print("Name and Project cannot be NULL")
+        return __name__()
+    elif desc == "":
+        db.projects.insert_one({"name": name, "desc": "", "project": project})
+    else:
+        db.projects.insert_one({"name": name, "desc": desc, "project": project})
 
-            db.projects.insert_one({"id": id, "name": name, "desc": desc, "project": project})
 
-        elif selection == 2:
-            for p in projects.find():
-                print(p)
+def readProject():
+    for p in projects.find():
+        print(p)
 
-        elif selection == 3:
-            for p in projects.find():  #list all the datas from database
-                print(p)
 
-            #get unique id as an string, then convert it to ObjectId data type
-            updated_id = str(input("Enter the unique object ID of the information you want to update: "))
-            uid = ObjectId(updated_id)
+def updateProject(uid, name, desc, project):
+    for id in projects.find({"_id": uid}):  # search datas relates selected ObjectId
+        if name != "":
+            db.projects.update_many({"_id": uid},{"$set": {"name": name}})
+        if desc != "":
+            db.projects.update_one({"_id": uid}, {"$set": {"desc": desc}})
+        if project != "":
+            db.projects.update_one({"_id": uid}, {"$set": {"project": project}})
 
-            for i in projects.find({"_id": uid}): #search datas relates selected ObjectId
-                updated_value = str(input("Which information do you want to update (Id, Name, Desc, Project) or press 'E' to complete the update operation, please enter one of them: "))
-                if updated_value == 'Id' or updated_value == "id":
-                    new_value = int(input("Enter new id:" ))
-                    db.projects.update_one({"_id": uid}, {"$set": {"id": new_value}})
-                elif updated_value == "Name" or updated_value == "name":
-                    new_value = str(input("Enter new name: "))
-                    db.projects.update_one({"_id": uid}, {"$set": {"name": new_value}})
-                elif updated_value == "Desc" or updated_value == "desc":
-                    new_value = str(input("Enter new description: "))
-                    db.projects.update_one({"_id": uid}, {"$set": {"desc": new_value}})
-                elif updated_value == "Project" or updated_value == "project":
-                    new_value = str(input("Enter new project: "))
-                    db.projects.update_one({"_id": uid}, {"$set": {"project": new_value}})
-                elif updated_value == 'E':
-                    print("Update operation is completed.\n")
-                    exit(0)
-                else:
-                    print("Entered option is invalid. Please try again!\n")
-
-        elif selection == 4:
-            for p in projects.find():
-                print(p)
-            deleted_value = int(input("Enter the value you want to delete: "))
-            result = db.projects.delete_many({"id": deleted_value})
-
-        else:
-            print("Good Bye!")
-            exit(1)
-
-        print("Select one of the CRUD operation: \n"
-              "1. Create a new project\n"
-              "2. Read projects\n"
-              "3. Update project\n"
-              "4. Delete project\n"
-              "5. Exit\n"
-              "Enter selection: ")
-        selection = int(input())
-
+def deleteProject(uid):
+    db.projects.delete_many({"_id": uid})
 
 if __name__ == "__main__":
+    
     # connecting MongoDB instance
     client = MongoClient("localhost", 27017)
 
@@ -108,14 +72,41 @@ if __name__ == "__main__":
     # If 'project' collection doesn't exist, it will be created. Otherwise, it is used.
     projects = db.projects
 
-    # take a JSON file path and create null list
-    # filename = 'C:\Users\User\Desktop\dockerDeneme\dockerExample1\dockerTogether\p.json '
-    listObj = []
+    # Zero is used for load datas from json file to mongoDB, it is optional
+    zero_option = int(input("Please enter 0 in order to adding datas from JSON file to MongoDB:  "))
+    if zero_option == 0:
+        filepath = input("Enter the JSON file path: ")
+        fileOperation(filepath) # function call
 
-    #control the collection whether is null or not. If there is no collection, function is called. I write it to avoid dumping
-    query = db.projects.find()
-    if (len(list(query))) == 0:
-        fileOperation()  # function call
 
     menu() #function call
+    selection = int(input())
 
+    if selection == 5:
+        print("Good Bye!\n")
+        exit(0)
+
+    while selection != 5:
+        if selection == 1:
+            name = str(input("\nEnter name: "))
+            desc = str(input("\nEnter description: "))
+            project = str(input("\nEnter project: "))
+            createProject(name, desc, project)
+        elif selection == 2:
+            readProject()
+        elif selection == 3:
+            updated_project = str(input("Enter the unique object ID of the information you want to update: "))
+            uid = ObjectId(updated_project)
+            name = str(input("\nEnter name: "))
+            desc = str(input("\nEnter description: "))
+            project = str(input("\nEnter project: "))
+            updateProject(uid, name, desc, project)
+        elif selection == 4:
+            deleted_project = str(input("Enter the unique object ID you want to delete: "))
+            uid = ObjectId(deleted_project)
+            deleteProject(uid)
+        else:
+            print("Good Bye!\n")
+            exit(0)
+        menu()
+        selection = int(input())

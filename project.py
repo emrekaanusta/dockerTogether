@@ -116,3 +116,13 @@ if __name__ == "__main__":
             exit(0)
         menu()
         selection = int(input())
+
+
+#TODO file okumayı güncelle, insert.many kalsın sadece, boş string yerine NULL/object tanımla/oop
+#TODO models folder/project file + device.py + person.py optional-required olarak tnaımla oop olarak bakanilriz
+
+
+#TODO file_reader.py -- jsondan okuma ortak şeyler
+#TODO model classlar
+#TODO db_helper oluşturabilirz mongoya bağlamak için 
+#TODO services folder/ person service, project service.. koy!

@@ -72,11 +72,6 @@ if __name__ == "__main__":
 
     people = db["people"]
 
-#dosya varsa yüklemesin
-#LOADING JSON FILE
-#with open('people.json') as file:
-#    file_data = json.load(file)
-#people.insert_many(file_data)
 
 #fonksiyonları teker teker böl
 while True: #Does not exit the code until you give command to exit

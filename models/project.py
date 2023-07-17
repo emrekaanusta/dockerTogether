@@ -7,7 +7,7 @@ class projectService:
         self.project = None
     
 
-projects = projectService()
+project_ = projectService()
 
 
 

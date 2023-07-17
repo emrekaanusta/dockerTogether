@@ -1,7 +1,7 @@
 import db.db_manager
 from services.device_service import read_device, add_device, update_device, json_file_upload, delete_device
 from db.db_manager import Database
-#from models.device import __init__
+from models.device import deviceService
 database = Database()
 database.connect_database()
 device_collection = database.device_collection
@@ -50,17 +50,19 @@ def main():
                     port = input("Please enter the port number: ")
                     username = input("Please enter the username: ")
                     password = input("Please enter the password: ")
-                    add_device(db, device_num, ip, port, username, password)
+                    device = deviceService(number = device_num, ip = ip, port = port, username = username, password = password)
+                    add_device(database, device_collection, device)
+
                     checker = True
 
                 elif option == 3:
                     number = int(input("Select the number of the device that you want to delete: "))
-                    delete_device(db, number)
+                    delete_device(database, device_collection, number)
                     checker = True
 
                 elif option == 4:
                     device_num = int(input("Please enter the device number of the device that you would like to update: "))
-                    update_device(db, device_collection, device_num)
+                    update_device(database, device_collection, device_num)
                     checker = True
 
                 elif option == 5:

@@ -1,8 +1,9 @@
 import json
 from pymongo import MongoClient 
+from db.db_manager import database
 client = MongoClient('mongodb://localhost:27017/')
-db = client['device_list']
-collection = db['devices']
+db = client['nokia_project']
+collection = db['device_database']
 
 def read_device(collection, devicenumber):
     document = collection.find_one({'device_number': devicenumber})

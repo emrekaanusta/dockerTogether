@@ -12,7 +12,9 @@ class database:
         client = MongoClient("localhost", 27017)
 
         #  If the 'projectdb' doesn't exist, it is created. Otherwise, it is used.
-        db = client.projectdb
+        db = client.main_db
 
         # If 'project' collection doesn't exist, it will be created. Otherwise, it is used.
-        collection = db.collection
+        device_collection = db.collection
+        person_collection = db.collection
+        project_collection = db.collection

@@ -1,3 +1,11 @@
+import json
+from pymongo import MongoClient 
+from db.db_manager import database
+client = MongoClient('mongodb://localhost:27017/')
+db = client['nokia_project']
+collection = db['device_database']
+
+
 def main():
     print("------Welcome to 'DockerTogether' App------\n")
     print("Please select one of the option:\n" 

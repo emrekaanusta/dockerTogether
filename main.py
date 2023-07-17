@@ -1,7 +1,7 @@
 import db.db_manager
 from services.device_service import read_device, add_device, update_device, json_file_upload, delete_device
 from db.db_manager import Database
-from models.device import __init__
+#from models.device import __init__
 database = Database()
 database.connect_database()
 device_collection = database.device_collection

@@ -1,11 +1,3 @@
-class projectService:
-    
-
-    def _init_(self):
-        self.name = None
-        self.description = None
-        self.project = None
-    
 class deviceService:
 
     def __init__(self):
@@ -16,7 +8,4 @@ class deviceService:
         self.device_username = None
         self.device_password = None
 
-projects = projectService()
-
 devices = deviceService()
-

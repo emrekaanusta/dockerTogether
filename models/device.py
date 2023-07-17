@@ -1,11 +1,11 @@
 class deviceService:
 
-    def __init__(self):
+    def __init__(self, number, ip, port, username, password):
 
-        self.device_number = None
-        self.device_ip = None
-        self.device_port = None
-        self.device_username = None
-        self.device_password = None
+        self.device_number = number
+        self.device_ip = ip
+        self.device_port = port
+        self.device_username = username
+        self.device_password = password
 
 devices = deviceService()

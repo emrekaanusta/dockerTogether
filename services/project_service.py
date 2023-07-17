@@ -5,6 +5,13 @@ import json
 import os
 
 
+from db.db_manager import Database 
+
+database = Database()
+database.connect_database()
+projects = database.project_collection
+
+
 # file operations are done such as checking file path, opening file and loading/inserting data from JSON to MongoDB
 def fileOperation(filepath):
 
@@ -18,9 +25,9 @@ def fileOperation(filepath):
 
         # Check whether data is more than 1 or not, then inserting loaded data to collection in MongoDB.
         if isinstance(data, list):
-            db.projects.insert_many(data)
+            database.projects.insert_many(data)
         else:
-            db.projects.insert_one(data)
+            database.projects.insert_one(data)
 
         print("Data has been written to MongoDB.")
 
@@ -41,9 +48,9 @@ def createProject(name, desc, project):
         print("Name and Project cannot be NULL")
         return __name__()
     elif desc == "":
-        db.projects.insert_one({"name": name, "desc": "", "project": project})
+        projects.insert_one({"name": name, "desc": "", "project": project})
     else:
-        db.projects.insert_one({"name": name, "desc": desc, "project": project})
+        projects.insert_one({"name": name, "desc": desc, "project": project})
 
 
 #reading available collection from database
@@ -56,28 +63,33 @@ def readProject():
 def updateProject(uid, name, desc, project):
     for id in projects.find({"_id": uid}):  # search datas relates selected ObjectId
         if name != "":
-            db.projects.update_many({"_id": uid},{"$set": {"name": name}})
+            projects.update_many({"_id": uid},{"$set": {"name": name}})
         if desc != "":
-            db.projects.update_one({"_id": uid}, {"$set": {"desc": desc}})
+            projects.update_one({"_id": uid}, {"$set": {"desc": desc}})
         if project != "":
-            db.projects.update_one({"_id": uid}, {"$set": {"project": project}})
+            projects.update_one({"_id": uid}, {"$set": {"project": project}})
 
 #deleting specific collection with using unique project id
 def deleteProject(uid):
-    db.projects.delete_many({"_id": uid})
+    projects.delete_many({"_id": uid})
 
 
+'''
 if __name__ == "__main__":
     
+    
+
     # connecting MongoDB instance
-    client = MongoClient("localhost", 27017)
+    #client = MongoClient("localhost", 27017)
 
     #  If the 'projectdb' doesn't exist, it is created. Otherwise, it is used.
-    db = client.projectdb
+    #db = client.projectdb
 
     # If 'project' collection doesn't exist, it will be created. Otherwise, it is used.
-    projects = db.projects
-    
+    #projects = db.projects
+
+
+
 
     # Zero is used for load datas from json file to mongoDB, it is optional
     zero_option = int(input("Please enter 0 in order to adding datas from JSON file to MongoDB:  "))
@@ -117,6 +129,7 @@ if __name__ == "__main__":
             exit(0)
         menu()
         selection = int(input())
+'''
 
 
 #TODO file okumayı güncelle, insert.many kalsın sadece, boş string yerine NULL/object tanımla/oop

@@ -21,11 +21,11 @@ def main():
           "3. Device\n"
           "4. Exit\n")
     option = int(input())
-    if option > 3:
+    if option == 4:
         print("Good Bye!\n")
         exit(0)
         
-    while(option != 3):
+    while(option != 4):
         if option == 1:
             with open("Person.py") as f1:
                 exec(f1.read())
@@ -78,6 +78,13 @@ def main():
         else:
             print("Good Bye!\n")
             exit(0)
+
+        print("Please select one of the option:\n" 
+            "1. Person\n" 
+            "2. Project\n"
+            "3. Device\n"
+            "4. Exit\n")
+        option = int(input())
 
 
 main()

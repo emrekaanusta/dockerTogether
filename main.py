@@ -4,9 +4,16 @@ from bson import ObjectId
 import json
 import os
 
-import db.db_manager
+#import db.db_manager
 from services.project_service import fileOperation,createProject,menu,readProject,updateProject,deleteProject
 from db.db_manager import Database 
+
+from models.project import projectService
+project_model = projectService()
+
+
+#TODO len al arraya koy
+
 
 database = Database()
 database.connect_database()
@@ -51,7 +58,8 @@ def main():
                     name = str(input("\nEnter name: "))
                     desc = str(input("\nEnter description: "))
                     project = str(input("\nEnter project: "))
-                    createProject(name, desc, project)
+                    p = projectService(name=name, description=desc, project=project)
+                    createProject(name, desc, project)                    
                 elif selection == 2:
                     readProject()
                 elif selection == 3:
@@ -79,7 +87,9 @@ def main():
             print("Good Bye!\n")
             exit(0)
 
-        print("Please select one of the option:\n" 
+
+        print("\n------------------------------------")
+        print("\nPlease select one of the option:\n" 
             "1. Person\n" 
             "2. Project\n"
             "3. Device\n"

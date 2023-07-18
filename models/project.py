@@ -1,13 +1,12 @@
+
 class projectService:
     
 
-    def _init_(self):
-        self.name = None
-        self.description = None
-        self.project = None
+    def _init_(self,name,description,project):
+        self.name = name
+        self.description = description
+        self.project = project
+
+p = projectService()
     
-
-project_ = projectService()
-
-
 

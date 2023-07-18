@@ -6,11 +6,35 @@ import os
 
 
 from db.db_manager import Database 
+from models.project import projectService
+
+project_model = projectService()
+
+
 
 database = Database()
 database.connect_database()
 projects = database.project_collection
 
+
+def fileOperation(filepath):
+
+    if filepath:
+        with open(filepath) as json_file:
+            data = json.load(json_file)
+
+            for item in data:
+                if not projects.find_one(item):
+                    projects.insert_one(item)  
+
+            print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
+
+    else:
+        print("This file does not exist!")
+            
+
+
+'''
 
 # file operations are done such as checking file path, opening file and loading/inserting data from JSON to MongoDB
 def fileOperation(filepath):
@@ -30,10 +54,12 @@ def fileOperation(filepath):
             database.projects.insert_one(data)
 
         print("Data has been written to MongoDB.")
+'''
+        
 
 # menu is created for selecting CRUD operation
 def menu():
-    print("Select one of the CRUD operation: \n"
+    print("\nSelect one of the CRUD operation: \n"
           "1. Create a new project\n"
           "2. Read projects\n"
           "3. Update project\n"
@@ -49,8 +75,10 @@ def createProject(name, desc, project):
         return __name__()
     elif desc == "":
         projects.insert_one({"name": name, "desc": "", "project": project})
+        #project_model._init_(name=name, description=None, project = project)
     else:
         projects.insert_one({"name": name, "desc": desc, "project": project})
+        #project_model._init_(name=name, description=desc, project = project)
 
 
 #reading available collection from database

@@ -11,12 +11,12 @@ from models.project import projectService
 project_model = projectService()
 
 
-
 database = Database()
 database.connect_database()
 projects = database.project_collection
 
 
+'''
 def fileOperation(filepath):
 
     if filepath:
@@ -31,7 +31,7 @@ def fileOperation(filepath):
 
     else:
         print("This file does not exist!")
-            
+'''        
 
 
 '''

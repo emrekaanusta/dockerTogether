@@ -7,5 +7,3 @@ class deviceService:
         self.device_port = port
         self.device_username = username
         self.device_password = password
-
-devices = deviceService()

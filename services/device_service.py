@@ -18,22 +18,22 @@ def read_device(device_collection, devicenumber):
 
     print(" ")  
 
-def add_device(db, device_num, ip, port, username, password):
-    if not device_collection.find_one({'device_number': device_num}):
-        new_document = {"device_number": device_num, "device_ip": ip, "device_port": port, "device_username": username, "device_password": password}
+def add_device(database, device_collection, device):
+    if not device_collection.find_one({'device_number': device.device_number}):
+        new_document = {"device_number": device.device_number, "device_ip": device.device_ip, "device_port": device.device_port, "device_username": device.device_username, "device_password": device.device_password}
         database.device_collection.insert_one(new_document)
         #cursor = device_collection.find()
         #for document in cursor:
             #print(document)
-        print("Device with the  device number ", device_num, " has been successfully added to the database!", sep="")
+        print("Device with the  device number ", device.device_number, " has been successfully added to the database!", sep="")
     else: 
         print("There is already a device with that specific device number.")
         
-def delete_device(db, number):
+def delete_device(database, device_collection, number):
     database.device_collection.delete_one({"device_number": number})
     print("Device with the device number", number, "has been successfully deleted from the database!")
 
-def update_device(db, device_collection, device_num):
+def update_device(database, device_collection, device_num):
     print(" ")
     document = device_collection.find_one({'device_number': device_num})
     if document:   #meaning we have a device with that specific number
@@ -69,18 +69,4 @@ def update_device(db, device_collection, device_num):
     else: 
         print("There is no device with the number ", device_num , ".\n", sep="")
 
-def json_file_upload(device_collection, file_path):
-    if file_path:
-        with open(file_path) as json_file:
-            data = json.load(json_file)
-
-            for item in data:
-                if not device_collection.find_one(item):
-                    device_collection.insert_one(item)  
-                else:
-                    print("There is already a device with device number ", item["device_number"], "!", sep="")   
-            
-            print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
-    else:
-        print("This file does not exist!")
             

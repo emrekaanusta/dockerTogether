@@ -1,5 +1,5 @@
-import db.db_manager
-from services.device_service import read_device, add_device, update_device, json_file_upload, delete_device
+from common.file_reader import File_reader
+from services.device_service import read_device, add_device, update_device, delete_device
 from db.db_manager import Database
 from models.device import deviceService
 database = Database()
@@ -68,7 +68,8 @@ def main():
                 elif option == 5:
                     file_path = input("Enter the path to the JSON file: ")
                     print("")
-                    json_file_upload(device_collection, file_path)
+                    file_reader = File_reader()
+                    file_reader.device_upload(device_collection, file_path)
                     checker = True
 
                 print(" ")

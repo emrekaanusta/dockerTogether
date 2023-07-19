@@ -5,22 +5,12 @@ import json
 import os
 
 #import db.db_manager
-from services.project_service import createProject,menu,readProject,updateProject,deleteProject
-from db.db_manager import Database 
-from common.file_reader import File_reader
-from models.project import projectService
+from services.project_service import createProject,menu,readProject,updateProject,deleteProject,fileOperation
+from db.db_manager import connect_collection 
+from common.file_reader import file_upload
+from models.project import Project
 
-project_model = projectService()
-file_reader = File_reader()
-
-
-
-#TODO len al arraya koy
-list = []
-
-database = Database()
-database.connect_database()
-project_collection = database.project_collection
+#project_model = Project()
 
 
 def main():
@@ -46,8 +36,10 @@ def main():
             zero_option = int(input("Please enter 0 in order to adding datas from JSON file to MongoDB:  "))
             if zero_option == 0:
                 filepath = input("Enter the JSON file path: ")
-                file_reader.others_upload(filepath) # function call
-
+                #file_reader.others_upload(project_collection, filepath) # function call
+                data = file_upload(filepath)
+                fileOperation(connect_collection("project"), data, filepath)
+                #TODO instertler buraya
 
             menu() #function call
             selection = int(input())
@@ -61,23 +53,24 @@ def main():
                     name = str(input("\nEnter name: "))
                     desc = str(input("\nEnter description: "))
                     project = str(input("\nEnter project: "))
-                    project_model._init_(name=name, description=desc, project=project)
-                    #list.append(name,desc,project)
-                    #print(list[0])
-                    createProject(name, desc, project)                    
+                                  
+                    #TODO device
+                    project_model = Project(name=name,description=desc,project=project)
+                    createProject(connect_collection("project"), project_model.name, project_model.description, project_model.project)   
                 elif selection == 2:
-                    readProject()
+                    readProject(connect_collection("project"))
                 elif selection == 3:
                     updated_project = str(input("Enter the unique object ID of the information you want to update: "))
                     uid = ObjectId(updated_project)
                     name = str(input("\nEnter name: "))
                     desc = str(input("\nEnter description: "))
                     project = str(input("\nEnter project: "))
-                    updateProject(uid, name, desc, project)
+                    project_model = Project(name=name,description=desc,project=project)
+                    updateProject(connect_collection("project"), uid, project_model.name, project_model.description, project_model.project)
                 elif selection == 4:
                     deleted_project = str(input("Enter the unique object ID you want to delete: "))
                     uid = ObjectId(deleted_project)
-                    deleteProject(uid)
+                    deleteProject(connect_collection("project"), uid)
                 else:
                     print("Good Bye!\n")
                     exit(0)

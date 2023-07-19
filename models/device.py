@@ -1,4 +1,4 @@
-class deviceService:
+class Device:
 
     def __init__(self, number, ip, port, username, password):
 

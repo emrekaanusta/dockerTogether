@@ -1,41 +1,11 @@
 import json
-from db.db_manager import Database 
 
-
-class File_reader:
-
-    #enables to read and upload json file into the MongoDB for device
-    def device_upload(self, device_collection, file_path):
+def file_upload(file_path):
         if file_path:
             with open(file_path) as json_file:
                 data = json.load(json_file)
-
-                for item in data:
-                    if not device_collection.find_one(item):
-                        device_collection.insert_one(item)  
-                    else:
-                        print("There is already a device with device number ", item["device_number"], "!", sep="")   
-                
-                print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
+                return data
         else:
             print("This file does not exist!")
 
-    
-    #enables to read and upload json file into the MongoDB for person and project
-    def others_upload(self, filepath):
-        database = Database()
-        database.connect_database()
-        projects = database.project_collection
-
-        if filepath:
-            with open(filepath) as json_file:
-                data = json.load(json_file)
-
-                for item in data:
-                    if not projects.find_one(item):
-                        projects.insert_one(item)  
-
-                print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
-
-        else:
-            print("This file does not exist!")
+file_upload("/root/dockerTogether/json/device.json")

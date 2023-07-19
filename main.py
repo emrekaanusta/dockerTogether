@@ -1,10 +1,8 @@
-from common.file_reader import File_reader
-from services.device_service import read_device, add_device, update_device, delete_device
-from db.db_manager import Database
-from models.device import deviceService
-database = Database()
-database.connect_database()
-device_collection = database.device_collection
+from common.file_reader import file_upload
+from services.device_service import read_device, add_device, update_device, delete_device, json_file_upload
+from db.db_manager import connect_collection
+from models.device import Device
+
 
 
 def main():
@@ -21,11 +19,9 @@ def main():
         
     while(option != 4):
         if option == 1:
-            with open("Person.py") as f1:
-                exec(f1.read())
+            print("")
         elif option == 2:
-            with open("project.py") as f2:
-                exec(f2.read())
+            print("")
         elif option == 3:
             print("1. Read information about devices")
             print("2. Add another device to the database")
@@ -35,14 +31,12 @@ def main():
 
             option = int(input("Please enter your choice: "))
             print(" ")
-            checker = True
+            checker = False
 
-            while checker:
-                checker = False
+            while not checker:
                 if option == 1:   
                     devicenumber = int(input("Please enter the device number of the device that you would like to get information about: "))
-                    read_device(device_collection, devicenumber) 
-                    checker = True
+                    read_device(connect_collection("device"), devicenumber) 
 
                 elif option == 2:
                     device_num = int(input("Please enter the device number of the device that you would like to add to the database: "))
@@ -50,38 +44,30 @@ def main():
                     port = input("Please enter the port number: ")
                     username = input("Please enter the username: ")
                     password = input("Please enter the password: ")
-                    device = deviceService(number = device_num, ip = ip, port = port, username = username, password = password)
-                    add_device(database, device_collection, device)
-
-                    checker = True
+                    device = Device(device_num, ip, port, username, password)
+                    add_device(connect_collection("device"), device)
 
                 elif option == 3:
                     number = int(input("Select the number of the device that you want to delete: "))
-                    delete_device(database, device_collection, number)
-                    checker = True
+                    delete_device(connect_collection("device"), number)
 
                 elif option == 4:
                     device_num = int(input("Please enter the device number of the device that you would like to update: "))
-                    update_device(database, device_collection, device_num)
-                    checker = True
+                    update_device(connect_collection("device"), device_num)
 
                 elif option == 5:
-                    file_path = input("Enter the path to the JSON file: ")
-                    print("")
-                    file_reader = File_reader()
-                    file_reader.device_upload(device_collection, file_path)
+                    file_path = input("Enter the path to the JSON file: \n")
+                    json_file_upload(connect_collection("device"), file_upload(file_path))
+
+                else:
                     checker = True
 
                 print(" ")
-                if not checker == False:
-                    option = int(input("Please enter 1, 2, 3, 4 or 5 to continue database operations and anything other than these to stop the program: "))     
-                else:
-                    print("You entered a number different than 1, 2, 3, 4 and 5\n")
-                    print("See you later!")            
+                if not checker:
+                    option = int(input("Please enter 1, 2, 3, 4 or 5 to continue database operations and anything other than these to stop the program: "))                
 
         else:
             print("Good Bye!\n")
             exit(0)
-
 
 main()

@@ -1,11 +1,19 @@
 from pymongo import MongoClient
 
-class Database:
-        
-    def connect_database(self):
-        # connecting MongoDB instance
+def connect_collection(name):
+
         client = MongoClient("localhost", 27017)
-        db = client.main_db
-        client = MongoClient('mongodb://localhost:27017/')
         db = client['nokia_project']
-        self.device_collection = db['device_database']
+
+        device_collection = db['device_database']
+        project_collection = db['project_collection']
+        person_collection = db['person_collection']
+
+        if name == "device":
+            return device_collection
+        if name == "project":
+            return project_collection
+        if name == "person":
+            return person_collection
+
+

@@ -5,15 +5,18 @@ import json
 import os
 
 #import db.db_manager
-from services.project_service import fileOperation,createProject,menu,readProject,updateProject,deleteProject
+from services.project_service import createProject,menu,readProject,updateProject,deleteProject
 from db.db_manager import Database 
-
+from common.file_reader import File_reader
 from models.project import projectService
+
 project_model = projectService()
+file_reader = File_reader()
+
 
 
 #TODO len al arraya koy
-
+list = []
 
 database = Database()
 database.connect_database()
@@ -43,7 +46,7 @@ def main():
             zero_option = int(input("Please enter 0 in order to adding datas from JSON file to MongoDB:  "))
             if zero_option == 0:
                 filepath = input("Enter the JSON file path: ")
-                fileOperation(filepath) # function call
+                file_reader.others_upload(filepath) # function call
 
 
             menu() #function call
@@ -58,7 +61,9 @@ def main():
                     name = str(input("\nEnter name: "))
                     desc = str(input("\nEnter description: "))
                     project = str(input("\nEnter project: "))
-                    p = projectService(name=name, description=desc, project=project)
+                    project_model._init_(name=name, description=desc, project=project)
+                    #list.append(name,desc,project)
+                    #print(list[0])
                     createProject(name, desc, project)                    
                 elif selection == 2:
                     readProject()

@@ -7,6 +7,5 @@ class projectService:
         self.description = description
         self.project = project
 
-p = projectService()
     
 

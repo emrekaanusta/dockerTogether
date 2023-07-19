@@ -1,8 +1,8 @@
 
-class projectService:
+class Project:
     
 
-    def _init_(self,name,description,project):
+    def __init__(self,name,description,project):
         self.name = name
         self.description = description
         self.project = project

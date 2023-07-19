@@ -5,33 +5,28 @@ import json
 import os
 
 
-from db.db_manager import Database 
-from models.project import projectService
+from db.db_manager import connect_collection 
+from models.project import Project
 
-project_model = projectService()
+#project_model = Project()
 
-
+'''
 database = Database()
 database.connect_database()
 projects = database.project_collection
-
-
 '''
-def fileOperation(filepath):
 
-    if filepath:
-        with open(filepath) as json_file:
-            data = json.load(json_file)
 
-            for item in data:
-                if not projects.find_one(item):
-                    projects.insert_one(item)  
 
-            print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
 
-    else:
-        print("This file does not exist!")
-'''        
+def fileOperation(project_collection, data, filepath):
+
+    for item in data:
+        if not project_collection.find_one(item):
+            project_collection.insert_one(item)  
+
+        print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
+       
 
 
 '''
@@ -69,37 +64,37 @@ def menu():
 
 
 #creating new collection
-def createProject(name, desc, project):
-    if name is None or project is None:
+def createProject(project_collection, name, desc, project):
+    if name == "" or project == "":
         print("Name and Project cannot be NULL")
-        return __name__()
+        raise ValueError("Name and Project cannot be NULL")
     elif desc == "":
-        projects.insert_one({"name": name, "desc": "", "project": project})
-        #project_model._init_(name=name, description=None, project = project)
+        #new_project = Project(name,"", project)
+        project_collection.insert_one({"name": name, "desc": "", "project": project})
+        
     else:
-        projects.insert_one({"name": name, "desc": desc, "project": project})
-        #project_model._init_(name=name, description=desc, project = project)
+        project_collection.insert_one({"name": name, "desc": desc, "project": project})
 
 
 #reading available collection from database
-def readProject():
-    for p in projects.find():
+def readProject(project_collection):
+    for p in project_collection.find():
         print(p)
 
 
 #this function enables user to updating project collection
-def updateProject(uid, name, desc, project):
-    for id in projects.find({"_id": uid}):  # search datas relates selected ObjectId
+def updateProject(project_collection, uid, name, desc, project):
+    for id in project_collection.find({"_id": uid}):  # search datas relates selected ObjectId
         if name != "":
-            projects.update_many({"_id": uid},{"$set": {"name": name}})
+            project_collection.update_many({"_id": uid},{"$set": {"name": name}})
         if desc != "":
-            projects.update_one({"_id": uid}, {"$set": {"desc": desc}})
+            project_collection.update_one({"_id": uid}, {"$set": {"desc": desc}})
         if project != "":
-            projects.update_one({"_id": uid}, {"$set": {"project": project}})
+            project_collection.update_one({"_id": uid}, {"$set": {"project": project}})
 
 #deleting specific collection with using unique project id
-def deleteProject(uid):
-    projects.delete_many({"_id": uid})
+def deleteProject(project_collection, uid):
+    project_collection.delete_many({"_id": uid})
 
 
 '''
@@ -162,9 +157,3 @@ if __name__ == "__main__":
 
 #TODO file okumayı güncelle, insert.many kalsın sadece, boş string yerine NULL/object tanımla/oop
 #TODO models folder/project file + device.py + person.py optional-required olarak tnaımla oop olarak bakanilriz
-
-
-#TODO file_reader.py -- jsondan okuma ortak şeyler
-#TODO model classlar
-#TODO db_helper oluşturabilirz mongoya bağlamak için 
-#TODO services folder/ person service, project service.. koy!

@@ -1,16 +1,19 @@
 from pymongo import MongoClient
 from services.person_service import create_person,read_person_list,update_person,delete_person, check_username, person_file_operation
-from models.person import PersonService
-from db.db_manager import Database
+from models.person import Person
+from db.db_manager import connect_collection
 import json
 import os
-from common.file_reader import File_reader
+from common.file_reader import file_upload
+
 
 #person_model = PersonService()
 
+'''
 database = Database()
 database.connect_database()
 person_collection = database.people_collection
+'''
 
 def main():
     print("------Welcome to 'DockerTogether' App------\n")
@@ -32,7 +35,7 @@ def main():
 
                     if selection == 1: #Printing everything in people collection
                         
-                        read_person_list()
+                        read_person_list(connect_collection("person"))
                         
 
                     elif selection == 2: #Adding a new entry to the collection PERSON 
@@ -43,13 +46,13 @@ def main():
                         projectInput = input("Project: ")
                         usernameInput = input("Username: ")
 
-                        pObject = PersonService(name = nameInput, isAdmin=adminInput, project= projectInput, username= usernameInput)
+                        pObject = Person(name = nameInput, isAdmin=adminInput, project= projectInput, username= usernameInput)
 
                         while True:
-                            if check_username(usernameInput):
+                            if check_username(connect_collection("person"), usernameInput):
                                 usernameInput = input("This username is already in use, please enter a new one: ")
                             else:
-                                create_person(nameInput, adminInput, projectInput, usernameInput)
+                                create_person(connect_collection("person"), nameInput, adminInput, projectInput, usernameInput)
                                 break
                         
                     elif selection == 3: #Updates an already existing entry
@@ -58,7 +61,7 @@ def main():
                         username_to_update = {"username": person_to_update}
                     
                         #Printing the entry's current values for clarity
-                        print(person_collection.find_one(username_to_update, {"_id": 0}))
+                        print(connect_collection("person").find_one(username_to_update, {"_id": 0}))
                     
                         #Taking the soon-to-be-updated values for the entry
                         updatedName = input("Please enter a new name (Leave blank if you wish to keep it): ")
@@ -66,20 +69,20 @@ def main():
                         updatedProject = input("Please enter a new project name (Leave blank if you wish to keep it): ")
                         updatedUsername = input("Please enter a new username (Leave blank if you wish to keep it): ")
 
-                        update_person(username_to_update, updatedName, updatedAdmin, updatedProject, updatedUsername)
+                        update_person(connect_collection("person"), username_to_update, updatedName, updatedAdmin, updatedProject, updatedUsername)
 
                     elif selection == 4: #Deletes an existing entry
                         #Identifying the entry to be deleted
                         person_to_delete = input("Please enter the username of the person to be deleted: ")
                         username_to_delete = {"username": person_to_delete}
                         
-                        delete_person(username_to_delete, person_to_delete)
+                        delete_person(connect_collection("person"), username_to_delete, person_to_delete)
 
                     
                     elif selection == 5:
                         json_file_path = input("Enter the JSON file path: ")
-                        file = File_reader()
-                        file.others_upload(person_collection, json_file_path)
+                        data = file_upload(json_file_path)
+                        person_file_operation(connect_collection("person"), data, json_file_path)
 
                     elif selection == 6:
                         break

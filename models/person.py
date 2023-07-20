@@ -1,4 +1,4 @@
-class PersonService:
+class Person:
 
     def __init__(self, name, isAdmin, project, username):
         self.name = name

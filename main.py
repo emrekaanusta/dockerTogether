@@ -82,7 +82,7 @@ def main():
                     elif selection == 5:
                         json_file_path = input("Enter the JSON file path: ")
                         data = file_upload(json_file_path)
-                        person_file_operation(connect_collection("person"), data, json_file_path)
+                        person_file_operation(connect_collection("person"), data)
 
                     elif selection == 6:
                         break

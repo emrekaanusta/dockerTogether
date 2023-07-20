@@ -16,7 +16,7 @@ def file_upload(filepath):
     if filepath:
         with open(filepath) as json_file:
             data = json.load(json_file)
-            print("data type is: ",type(data))
+            #print("data type is: ",type(data))
             return data
 
     else:

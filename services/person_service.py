@@ -10,12 +10,12 @@ database.connect_database()
 people = database.people_collection
 '''
 
-def person_file_operation(person_collection, data, filepath):
-
-
-    for item in data:
-        if not person_collection.find_one(item):
-                    person_collection.insert_one(item)  
+def person_file_operation(person_collection, data):
+    #print(len(data["people"]))
+    
+    for i in range(len(data["people"])):
+        if not person_collection.find_one(data["people"][i]):
+                    person_collection.insert_one(data["people"][i])  
 
     print("\nFile has been successfully uploaded to the database after the checking of duplicates!")
 

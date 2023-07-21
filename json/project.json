@@ -1,8 +1,14 @@
-[
+{
+  "project_dict": [
     {
       "name": "Gizem",
-      "desc": "Nokia1",
-      "project": "p1"
+      "description": "Nokia1",
+      "device": "p1"
+    },
+    {
+      "name": "Ali",
+      "description": "Nokia2",
+      "device": "p2"
     }
-
-]
+  ]
+}

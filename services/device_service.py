@@ -1,4 +1,8 @@
-def read_device(device_collection, devicenumber):
+from db.db_manager import connect_collection
+
+device_collection = connect_collection("device")
+
+def read_device(devicenumber):
     document = device_collection.find_one({'device_number': devicenumber})
     if document:   #meaning we have a device with that specific number
         print("Device number:", devicenumber)
@@ -11,7 +15,7 @@ def read_device(device_collection, devicenumber):
 
     print(" ")  
 
-def add_device(device_collection, device):
+def add_device(device):
     if not device_collection.find_one({'device_number': device.device_number}):
         new_document = {"device_number": device.device_number, "device_ip": device.device_ip, "device_port": device.device_port, "device_username": device.device_username, "device_password": device.device_password}
         device_collection.insert_one(new_document)
@@ -19,11 +23,11 @@ def add_device(device_collection, device):
     else: 
         print("There is already a device with that specific device number.")
         
-def delete_device(device_collection, number):
+def delete_device(number):
     device_collection.delete_one({"device_number": number})
     print("Device with the device number", number, "has been successfully deleted from the database!")
 
-def update_device(device_collection, device_num):
+def update_device(device_num):
     print(" ")
     document = device_collection.find_one({'device_number': device_num})
     if document:   #meaning we have a device with that specific number
@@ -57,23 +61,6 @@ def update_device(device_collection, device_num):
     else: 
         print("There is no device with the number ", device_num , ".\n", sep="")
 
-def json_file_upload(device_collection, device_list):
-    for device in device_list:
-        device_number = device.get("device_number")
-        existing_device = device_collection.find_one({"device_number": device_number})
 
-        if not existing_device:
-            new_document = {
-                "device_number": device_number,
-                "device_ip": device.get("device_ip"),
-                "device_port": device.get("device_port"),
-                "device_username": device.get("device_username"),
-                "device_password": device.get("device_password")
-            }
-            device_collection.insert_one(new_document)
-        else:
-            print("There is already a device with device number", device_number, "!")
-
-    print("\nFile has been successfully uploaded to the database after checking for duplicates!")
 
             

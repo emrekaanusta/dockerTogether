@@ -1,9 +1,9 @@
 class Device:
 
-    def __init__(self, number, ip, port, username, password):
+    def __init__(self, device_number, device_ip, device_port, device_username, device_password):
 
-        self.device_number = number
-        self.device_ip = ip
-        self.device_port = port
-        self.device_username = username
-        self.device_password = password
+        self.device_number = device_number
+        self.device_ip = device_ip
+        self.device_port = device_port
+        self.device_username = device_username
+        self.device_password = device_password

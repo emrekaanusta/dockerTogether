@@ -1,10 +1,11 @@
-[{
-    "device_number" : 1,
-    "device_ip":  "1000",
-    "device_port":  "10",
-    "device_username": "emrekaan",
-    "device_password": "emrekaan123"
-
+{
+    "device_dict":[
+    {
+        "device_number" : 1,
+        "device_ip":  "1000",
+        "device_port":  "10",
+        "device_username": "emrekaan",
+        "device_password": "emrekaan123"
 },
 {
     "device_number" : 2,
@@ -19,6 +20,6 @@
     "device_ip":  "1002",
     "device_port":  "12",
     "device_username": "görkem",
-    "device_password": "görkem123"
-    
-}]
+    "device_password": "görkem123"}
+]  
+}

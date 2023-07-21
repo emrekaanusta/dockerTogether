@@ -1,11 +1,16 @@
 
-class Project:
-    
+from typing import Optional
 
-    def __init__(self,name,description,project):
+
+class Project:    
+    name: str
+    description: Optional[str]
+    device: str
+
+    def __init__(self,name,description,device):
         self.name = name
         self.description = description
-        self.project = project
+        self.device = device
 
     
-
+#TODO fieldları belirt, optional kısmına göre düzelt

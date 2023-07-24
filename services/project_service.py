@@ -28,18 +28,18 @@ def menu():
 
 
 #creating new collection
-def createProject(name, description, device):
+def create_project(name, description, device):
     collection.insert_one({"name": name, "description": description, "device": device})
 
 
 #reading available collection from database
-def readProject():
+def read_project():
     for p in collection.find():
         print(p)
 #TODO read_all_proj funct, read_project_name/device/..func
 
 #this function enables user to updating project collection
-def updateProject(uid, name, description, device):
+def update_project(uid, name, description, device):
     for id in collection.find({"_id": uid}):  # search datas relates selected ObjectId
         if name != "":
             collection.update_many({"_id": uid},{"$set": {"name": name}})
@@ -49,5 +49,5 @@ def updateProject(uid, name, description, device):
             collection.update_one({"_id": uid}, {"$set": {"device": device}})
 
 #deleting specific collection with using unique project id
-def deleteProject(uid):
+def delete_project(uid):
     collection.delete_many({"_id": uid})

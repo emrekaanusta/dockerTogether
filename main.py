@@ -3,7 +3,8 @@ from services.device_service import (
     read_device,
     add_device,
     update_device,
-    delete_device
+    delete_device,
+    read_all_devices
 )
 from models.device import Device
 
@@ -40,12 +41,16 @@ def main():
 
             while not checker:
                 if option == 1:
-                    devicenumber = int(
-                        input(
-                            "Please enter the device number of the device that you would like to get information about: "
+                    answer = int(input("1. Read one specific device\n2. Read all devices\n"))
+                    if answer == 1:
+                        devicenumber = int(
+                            input(
+                                "Please enter the device number of the device that you would like to get information about: "
+                            )
                         )
-                    )
-                    read_device(devicenumber)
+                        read_device(devicenumber)
+                    elif answer == 2:
+                        read_all_devices()
 
                 elif option == 2:
                     device_num = int(
@@ -57,6 +62,7 @@ def main():
                     port = input("Please enter the port number: ")
                     username = input("Please enter the username: ")
                     password = input("Please enter the password: ")
+                    # TODO input ayrı func
                     device = Device(device_num, ip, port, username, password)
                     add_device(device)
 

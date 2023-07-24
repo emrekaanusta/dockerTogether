@@ -1,6 +1,6 @@
 from db.db_manager import connect_collection 
 
-collection = connect_collection("project")
+collection = connect_collection("project_collection")
 
 
 # menu is created for selecting CRUD operation
@@ -14,17 +14,6 @@ def menu():
           "5. Exit\n"
           "Enter selection: ")
 
-#TODO isimledirme yap, none kısımları çıkarabiliriz
-#creating new collection
-""" def createProject(name, description, device):
-    if name == "" or device == "":
-        print("Name and Device cannot be NULL")
-        raise ValueError("Name and Device cannot be NULL")
-    elif description == "":
-        collection.insert_one({"name": name, "description": "", "device": device})
-        
-    else:
-        collection.insert_one({"name": name, "description": description, "device": device}) """
 
 
 #creating new collection

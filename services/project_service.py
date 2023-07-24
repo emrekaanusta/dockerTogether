@@ -16,7 +16,7 @@ def menu():
 
 #TODO isimledirme yap, none kısımları çıkarabiliriz
 #creating new collection
-def createProject(name, description, device):
+""" def createProject(name, description, device):
     if name == "" or device == "":
         print("Name and Device cannot be NULL")
         raise ValueError("Name and Device cannot be NULL")
@@ -24,7 +24,12 @@ def createProject(name, description, device):
         collection.insert_one({"name": name, "description": "", "device": device})
         
     else:
-        collection.insert_one({"name": name, "description": description, "device": device})
+        collection.insert_one({"name": name, "description": description, "device": device}) """
+
+
+#creating new collection
+def createProject(name, description, device):
+    collection.insert_one({"name": name, "description": description, "device": device})
 
 
 #reading available collection from database

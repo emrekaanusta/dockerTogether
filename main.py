@@ -37,16 +37,18 @@ def main():
                     data = file_upload(filepath,"project_dict")
                     for i in data:
                         value = Project(**i)
-                        create_project(value.name, value.description,value.device)
+                        #create_project(value.name, value.description,value.device)
+                        create_project(value)
                     
                 elif selection == 1:
                     name = str(input("\nEnter name: "))
                     description = str(input("\nEnter description: "))
-                    device = str(input("\nEnter device: "))
-                                  
+                    device = str(input("\nEnter device: "))            
                     
                     project_model = Project(name=name,description=description,device=device)
-                    create_project(project_model.name, project_model.description, project_model.device)   
+                    #create_project(project_model.name, project_model.description, project_model.device)  
+                    create_project(project_model) 
+
                 elif selection == 2:
                     read_project()
                 elif selection == 3:
@@ -56,7 +58,8 @@ def main():
                     description = str(input("\nEnter description: "))
                     device = str(input("\nEnter device: "))
                     project_model = Project(name=name, description=description, device=device)
-                    update_project(uid, project_model.name, project_model.description, project_model.device)
+                    #update_project(uid, project_model.name, project_model.description, project_model.device)
+                    update_project(uid,project_model)
                 elif selection == 4:
                     deleted_project = str(input("Enter the unique object ID you want to delete: "))
                     uid = ObjectId(deleted_project)

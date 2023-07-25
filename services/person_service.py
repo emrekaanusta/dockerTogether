@@ -18,8 +18,14 @@ def check_username(username):
         return False
 
 
-def read_person_list():
+def read_all_people():
     mongoList = collection.find({}, {"_id": 0})
+    for person in mongoList:
+        print(person)
+
+
+def read_individual_person(filter, choice):
+    mongoList = collection.find({filter: choice}, {"_id": 0})
     for person in mongoList:
         print(person)
 

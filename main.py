@@ -1,6 +1,7 @@
 from services.person_service import (
     create_person,
-    read_person_list,
+    read_all_people,
+    read_individual_person,
     update_person,
     delete_person,
     check_username,
@@ -36,7 +37,18 @@ def main():
                 )
 
                 if selection == 1:  # Printing everything in people collection
-                    read_person_list()
+                    read_option = int(input("1- Read All\n2- Read Filtered\n"))
+                    if read_option == 1:
+                        read_all_people()
+                    elif read_option == 2:
+                        filter_option = input(
+                            "Which filter? Name, isAdmin, Project or Username\n"
+                        )
+                        if filter_option.lower() == "isadmin":
+                            applied_filter = int(input("Please enter your admin: "))
+                        else:
+                            applied_filter = input("Please enter your filter: ")
+                        read_individual_person(filter_option, applied_filter)
 
                 elif selection == 2:  # Adding a new entry to the collection PERSON
                     # Taking user input for the fields of the new entry
@@ -85,8 +97,10 @@ def main():
                     updatedName = input(
                         "Please enter a new name (Leave blank if you wish to keep it): "
                     )
-                    updatedAdmin = input(
-                        "Please enter the new admin permissions, yes or no (Leave blank if you wish to keep it): "
+                    updatedAdmin = int(
+                        input(
+                            "Please enter the new admin permissions, yes or no (Leave blank if you wish to keep it): "
+                        )
                     )
                     updatedProject = input(
                         "Please enter a new project name (Leave blank if you wish to keep it): "
@@ -120,7 +134,7 @@ def main():
 
                 elif selection == 5:
                     json_file_path = input("Enter the JSON file path: ")
-                    data = file_upload(json_file_path)
+                    data = file_upload(json_file_path, "person_dict")
                     # person_file_operation(connect_collection("person"), data)
                     for i in data:
                         value = Person(**i)

@@ -2,13 +2,8 @@
   "project_dict": [
     {
       "name": "Gizem",
-      "description": "Nokia1",
-      "device": "p1"
-    },
-    {
-      "name": "Ali",
-      "description": "Nokia2",
-      "device": "p2"
+      "description": "Nokia docker project",
+      "device": "IP Router"
     }
   ],
   "device_dict": [
@@ -18,20 +13,14 @@
       "device_port": "10",
       "device_username": "emrekaan",
       "device_password": "emrekaan123"
-    },
+    }
+  ],
+  "person_dict": [
     {
-      "device_number": 2,
-      "device_ip": "1001",
-      "device_port": "11",
-      "device_username": "gizem",
-      "device_password": "gizem123"
-    },
-    {
-      "device_number": 3,
-      "device_ip": "1002",
-      "device_port": "12",
-      "device_username": "görkem",
-      "device_password": "görkem123"
+      "name": "Gorkem",
+      "isAdmin": 1,
+      "project": "FastAPI",
+      "username": "gorkemmayadag"
     }
   ]
 }

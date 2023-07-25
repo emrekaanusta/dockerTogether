@@ -18,14 +18,6 @@ def read_device(devicenumber):
 
     # TODO READ all devices function oluştur, hata mesajı yolla
 
-def read_all_devices():
-    for document in device_collection:
-        print("Device number:", document.get("device_number"))
-        print("Device IP:", document.get("device_ip"))
-        print("Device port number:", document.get("device_port"))
-        print("Device username:", document.get("device_username"))
-        print("Device password:", document.get("device_password"))
-
 def add_device(device):
     if not device_collection.find_one({"device_number": device.device_number}):
         new_document = {

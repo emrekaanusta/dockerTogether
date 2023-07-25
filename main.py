@@ -3,8 +3,7 @@ from services.device_service import (
     read_device,
     add_device,
     update_device,
-    delete_device,
-    read_all_devices
+    delete_device
 )
 from models.device import Device
 
@@ -41,16 +40,13 @@ def main():
 
             while not checker:
                 if option == 1:
-                    answer = int(input("1. Read one specific device\n2. Read all devices\n"))
-                    if answer == 1:
                         devicenumber = int(
                             input(
                                 "Please enter the device number of the device that you would like to get information about: "
                             )
                         )
                         read_device(devicenumber)
-                    elif answer == 2:
-                        read_all_devices()
+
 
                 elif option == 2:
                     device_num = int(

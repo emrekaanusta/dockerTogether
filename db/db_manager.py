@@ -1,3 +1,4 @@
+
 from pymongo import MongoClient
 
 #connect MongoDB collection with sending collection name parameter

@@ -1,0 +1,22 @@
+{
+    "person_dict": [
+        {
+            "name": "Gorkem",
+            "isAdmin": 1,
+            "project": "FastAPI",
+            "username": "gorkemmayadag"
+        },
+        {
+            "name": "Gizem",
+            "isAdmin": 0,
+            "project": "Docker",
+            "username": "gizemseval"
+        },
+        {
+            "name": "Emre Kaan",
+            "isAdmin": 0,
+            "project": "MongoDB",
+            "username": "emrekaan"
+        }
+    ]
+}

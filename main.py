@@ -46,6 +46,7 @@ def main():
       
     while(option != 4):
         if option == 1:
+<<<<<<< HEAD
             while True:  # Does not exit the code until you give command to exit
                 selection = int(
                     input(
@@ -165,6 +166,11 @@ def main():
                     print("Please enter a valid command")
         elif option == 2:
  
+=======
+            print("görkem")
+
+        elif option == 2: 
+>>>>>>> 106f50188c04270c8c05308c07e0b92a9dfc15d8
             menu() #function call
             selection = int(input())
 
@@ -176,9 +182,9 @@ def main():
                 if selection == 0:
                     filepath = input("Enter the JSON file path: ")
                     data = file_upload(filepath,"project_dict")
+                    
                     for i in data:
                         value = Project(**i)
-                        
                         create_project(value)
                     
                 elif selection == 1:
@@ -187,27 +193,31 @@ def main():
                     device = str(input("\nEnter device: "))            
                     
                     project_model = Project(name=name,description=description,device=device)
-                    
                     create_project(project_model) 
 
                 elif selection == 2:
                     read_project()
+
                 elif selection == 3:
                     updated_project = str(input("Enter the unique object ID of the information you want to update: "))
                     uid = ObjectId(updated_project)
                     name = str(input("\nEnter name: "))
                     description = str(input("\nEnter description: "))
                     device = str(input("\nEnter device: "))
-                    project_model = Project(name=name, description=description, device=device)
-                    
+
+                    project_model = Project(name=name, description=description, device=device)                    
                     update_project(uid,project_model)
+
                 elif selection == 4:
                     deleted_project = str(input("Enter the unique object ID you want to delete: "))
                     uid = ObjectId(deleted_project)
+                    
                     delete_project(uid)
+
                 else:
                     print("Good Bye!\n")
                     exit(0)
+                
                 menu()
                 selection = int(input())
             

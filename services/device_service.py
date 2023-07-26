@@ -30,7 +30,6 @@ def add_device(device):
     if not device_collection.find_one({"device_number": device.device_number}):
 
         new_document = vars(device)
-
         # TODO document obje çevirisini düzelt (bir daha device classını importlamam gerekti)
         device_collection.insert_one(new_document)
         print(
@@ -40,7 +39,7 @@ def add_device(device):
             sep="",
         )
     else:
-        print("There is already a device with that specific device number.")
+        print("There is already a device with the device number:", device.device_number)
 
 
 def delete_device(number):

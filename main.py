@@ -46,7 +46,6 @@ def main():
       
     while(option != 4):
         if option == 1:
-<<<<<<< HEAD
             while True:  # Does not exit the code until you give command to exit
                 selection = int(
                     input(
@@ -165,13 +164,6 @@ def main():
                 else:
                     print("Please enter a valid command")
         elif option == 2:
- 
-=======
-            print("görkem")
-
-        elif option == 2: 
->>>>>>> 106f50188c04270c8c05308c07e0b92a9dfc15d8
-            menu() #function call
             selection = int(input())
 
             if selection == 5:

@@ -1,5 +1,3 @@
-
-
 from bson import ObjectId
 from services.project_service import create_project,menu,read_project,update_project,delete_project
 from common.file_reader import file_upload
@@ -25,8 +23,6 @@ from services.person_service import (
 )
 from models.person import Person
 from db.db_manager import connect_collection
-import json
-import os
 from common.file_reader import file_upload
 
 

@@ -164,6 +164,7 @@ def main():
                 else:
                     print("Please enter a valid command")
         elif option == 2:
+            menu() #function call
             selection = int(input())
 
             if selection == 5:

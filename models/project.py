@@ -13,4 +13,3 @@ class Project:
         self.device = device
 
     
-#TODO fieldları belirt, optional kısmına göre düzelt

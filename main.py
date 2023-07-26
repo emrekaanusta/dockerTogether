@@ -117,7 +117,7 @@ def main():
                     port = input("Please enter the port number: ")
                     username = input("Please enter the username: ")
                     password = input("Please enter the password: ")
-                    # TODO input ayrı func
+                    
                     device = Device(device_num, ip, port, username, password)
                     add_device(device)
 

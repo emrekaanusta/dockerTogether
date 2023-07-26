@@ -20,7 +20,6 @@ def main():
         
     while(option != 4):
         if option == 1:
-            print("Invalid")
                 
         elif option == 2:
  
@@ -72,7 +71,7 @@ def main():
 
 
         elif option == 3:
-            print("Invalid")
+
         else:
             print("Good Bye!\n")
             exit(0)

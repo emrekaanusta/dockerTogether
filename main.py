@@ -299,6 +299,10 @@ def main():
             "4. Exit\n"
         )
         option = int(input())
+        
+        if option == 4:
+            print("Good Bye!\n")
+            exit(0)
 
 
 main()

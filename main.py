@@ -3,7 +3,8 @@ from services.device_service import (
     read_device,
     add_device,
     update_device,
-    delete_device
+    delete_device,
+    read_all_devices,
 )
 from models.device import Device
 
@@ -24,9 +25,9 @@ def main():
 
     while option != 4:
         if option == 1:
-            print("")
+            
         elif option == 2:
-            print("")
+            
         elif option == 3:
             print("1. Read information about devices")
             print("2. Add another device to the database")
@@ -40,13 +41,16 @@ def main():
 
             while not checker:
                 if option == 1:
+                    option = int(input("1. Read one device \n2. Read all devices\n"))
+                    if option == 1:
                         devicenumber = int(
                             input(
-                                "Please enter the device number of the device that you would like to get information about: "
+                                "Please enter the device number of the device that you would like to get information about: \n"
                             )
                         )
                         read_device(devicenumber)
-
+                    elif option == 2:
+                        read_all_devices()
 
                 elif option == 2:
                     device_num = int(
@@ -80,7 +84,7 @@ def main():
 
                 elif option == 5:
                     file_path = input("Enter the path to the JSON file: \n")
-                    data = file_upload(file_path)
+                    data = file_upload(file_path, "device_dict")
                     for i in data:
                         value = Device(**i)
                         add_device(value)

@@ -1,4 +1,9 @@
 class Device:
+    device_number = int
+    device_ip = str
+    device_port = str
+    device_password = str
+    device_username = str
     def __init__(
         self, device_number, device_ip, device_port, device_username, device_password
     ):

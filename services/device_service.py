@@ -18,15 +18,19 @@ def read_device(devicenumber):
 
     # TODO READ all devices function oluştur, hata mesajı yolla
 
+def read_all_devices():
+    for document in device_collection.find():
+        print("Device number:", document.get("device_number"))
+        print("Device IP:", document.get("device_ip"))
+        print("Device port number:", document.get("device_port"))
+        print("Device username:", document.get("device_username"))
+        print("Device password:", document.get("device_password"),"\n")
+
 def add_device(device):
     if not device_collection.find_one({"device_number": device.device_number}):
-        new_document = {
-            "device_number": device.device_number,
-            "device_ip": device.device_ip,
-            "device_port": device.device_port,
-            "device_username": device.device_username,
-            "device_password": device.device_password,
-        }
+
+        new_document = vars(device)
+
         # TODO document obje çevirisini düzelt (bir daha device classını importlamam gerekti)
         device_collection.insert_one(new_document)
         print(

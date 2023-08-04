@@ -1,4 +1,4 @@
-# Nokia Internship Project
+# 🧙 Nokia Internship Project 🧙
 🚀 dockerTogether - Uniting Applications with Containerization 🐍📦
 
 Welcome to dockerTogether, Nokia's innovative Python project that leverages the power of Docker containers and MongoDB to simplify CRUD operations and persistent data storage! 🎉
